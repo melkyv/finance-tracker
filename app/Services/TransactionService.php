@@ -10,24 +10,12 @@ class TransactionService
 {
     public function paginate(int $perPage = 10, int $page = 1, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $transactions = Transaction::whereHas('account', function ($query) {
-                $query->where('user_id', auth()->id());
-            })
-            ->with(['account', 'category'])
-            ->when($search, function ($query, $search) {
-                $query->where('description', 'like', '%' . $search . '%')
-                    ->orWhere('amount', 'like', '%' . $search . '%')
-                    ->orWhere('type', 'like', '%' . $search . '%')
-                    ->orWhereHas('account', function ($q) use ($search) {
-                        $q->where('name', 'like', '%' . $search . '%');
-                    })
-                    ->orWhereHas('category', function ($q) use ($search) {
-                        $q->where('name', 'like', '%' . $search . '%');
-                    });
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage, ['*'], 'page', $page)
-            ->withQueryString();
+        $query = Transaction::search($search)->query(fn($q) => $q->with(['account', 'category']));
+
+        $query->where('user_id', auth()->id());
+
+        $transactions = $query->paginate($perPage, 'page', $page)
+                              ->withQueryString();
 
         return $transactions;
     }

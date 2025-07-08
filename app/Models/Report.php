@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use JeroenG\Explorer\Application\Explored;
+use Laravel\Scout\Searchable;
 
-class Report extends Model
+class Report extends Model implements Explored
 {
-    use HasFactory;
+    use HasFactory, Searchable;
     
     protected $fillable = [
         'user_id',
@@ -45,5 +47,34 @@ class Report extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'title' => $this->title,
+            'type' => $this->type,
+            'from_date' => $this->from_date,
+            'to_date' => $this->to_date,
+        ];
+    }
+
+    public function mappableAs(): array
+    {
+        return [
+            'id' => 'keyword',
+            'user_id' => 'keyword',
+            'title' => 'text',
+            'type' => 'text',
+            'from_date' => 'date',
+            'to_date' => 'date',
+        ];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'reports_index';
     }
 }

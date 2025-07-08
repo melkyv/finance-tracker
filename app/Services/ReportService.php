@@ -11,14 +11,12 @@ class ReportService
 {
     public function paginate(int $perPage = 10, int $page = 1, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $reports = auth()->user()->reports()
-            ->when($search, function ($query, $search) {
-                $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('type', 'like', '%' . $search . '%');
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage, ['*'], 'page', $page)
-            ->withQueryString();
+        $query = Report::search($search);
+
+        $query->where('user_id', auth()->id());
+
+        $reports = $query->paginate($perPage, 'page', $page)
+                         ->withQueryString();
 
         return $reports;
     }
