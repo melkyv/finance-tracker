@@ -20,11 +20,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button";
 import PaginationItems from "@/components/pagination-items";
-import { FormEventHandler, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Search, Eye, Download, Trash2, Plus, FileText } from "lucide-react";
 import { formatTimestamp } from "@/lib/utils";
 import { getIndexTypeColor, Report, ReportIndexProps } from "@/types/report";
+import { useDebounce } from "@/hooks/use-debounce";
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -35,24 +36,26 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function ReportIndex({ reports, filters }: ReportIndexProps) {
     const [search, setSearch] = useState<string>(filters.search || '');
-    const [isSearching, setIsSearching] = useState<boolean>(false);
+    const debouncedSearch = useDebounce(search, 300);
 
-    const handleSearch: FormEventHandler = (e) => {
-      e.preventDefault();
-      setIsSearching(true);
-      
-      router.get('/reports', 
-          { 
-            search: search,
-            page: 1
-          }, 
+    useEffect(() => {
+      if (debouncedSearch) {
+        router.get(
+          route('reports.index'),
+          { search: debouncedSearch },
           {
             preserveState: true,
-            preserveScroll: true,
-            onFinish: () => setIsSearching(false)
+            showProgress: false,
+            replace: true,
           }
-      );
-    }
+        );
+      } else if (filters.search) {
+        router.get(route('reports.index'), {}, {
+          preserveState: true,
+          replace: true,
+        });
+      }
+    }, [debouncedSearch]);
 
     const handlePageChange = (page: number) => {
       router.get('/reports', 
@@ -73,18 +76,16 @@ export default function ReportIndex({ reports, filters }: ReportIndexProps) {
 
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="flex items-center justify-between gap-2">
-                  <form onSubmit={handleSearch} className="flex items-center space-x-2">                 
-                      <Search />
-                      <Input
-                        placeholder="Search reports..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                      />
-                    
-                    <Button type="submit" disabled={isSearching}>
-                      {isSearching ? 'Searching...' : 'Search'}
-                    </Button>
-                  </form>
+                  <div className="relative w-full md:w-1/3">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="search"
+                      placeholder="Search reports..."
+                      className="w-full rounded-lg bg-background pl-8"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </div>
                   
                   <div className="flex items-center gap-2">
                     {/* Quick Report Buttons */}
