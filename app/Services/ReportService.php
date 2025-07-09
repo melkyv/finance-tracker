@@ -11,7 +11,7 @@ class ReportService
 {
     public function paginate(int $perPage = 10, int $page = 1, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $query = Report::search($search);
+        $query = Report::search($search)->latest('created_at');
 
         $query->where('user_id', auth()->id());
 

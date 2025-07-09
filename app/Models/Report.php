@@ -58,6 +58,7 @@ class Report extends Model implements Explored
             'type' => $this->type,
             'from_date' => $this->from_date,
             'to_date' => $this->to_date,
+            'created_at' => $this->created_at,
         ];
     }
 
@@ -70,6 +71,7 @@ class Report extends Model implements Explored
             'type' => 'text',
             'from_date' => 'date',
             'to_date' => 'date',
+            'created_at' => 'date',
         ];
     }
 
