@@ -64,6 +64,8 @@ class Transaction extends Model implements Explored
             'type' => $this->type,
             'account_name' => $this->account->name,
             'category_name' => $this->category?->name,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 
@@ -79,6 +81,8 @@ class Transaction extends Model implements Explored
             'type' => 'text',
             'account_name' => 'text',
             'category_name' => 'text',
+            'created_at' => 'date',
+            'updated_at' => 'date',
         ];
     }
 
