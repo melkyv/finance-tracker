@@ -10,7 +10,9 @@ class TransactionService
 {
     public function paginate(int $perPage = 10, int $page = 1, ?string $search = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $query = Transaction::search($search)->query(fn($q) => $q->with(['account', 'category']));
+        $query = Transaction::search($search)
+            ->query(fn($q) => $q->with(['account', 'category']))
+            ->latest('created_at');
 
         $query->where('user_id', auth()->id());
 
