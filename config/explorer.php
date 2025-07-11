@@ -35,6 +35,21 @@ return [
     'indexes' => [
         \App\Models\Report::class,
         \App\Models\Transaction::class,
+        'audit_logs' => [
+            'properties' => [
+                'timestamp' => 'date',
+                'event_type' => 'keyword',
+                'model_class' => 'keyword',
+                'model_id' => 'keyword',
+                'user_id' => 'keyword',
+                'user_name' => 'text',
+                'source_ip' => 'ip',
+                'data' => [
+                    'type' => 'object',
+                    'enabled' => false, // Just store the data, don't index sub-fields
+                ],
+            ]
+        ]
     ],
 
     /**
