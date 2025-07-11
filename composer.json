@@ -16,6 +16,8 @@
         "laravel/framework": "^12.0",
         "laravel/scout": "^10.15",
         "laravel/tinker": "^2.10.1",
+        "mateusjunges/laravel-kafka": "^2.7",
+        "opcodesio/log-viewer": "^3.18",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
