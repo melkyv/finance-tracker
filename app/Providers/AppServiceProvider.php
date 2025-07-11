@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\Report;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Observers\Kafka\ModelObserver;
 use App\Observers\TransactionObserver;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -26,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Transaction::observe(TransactionObserver::class);
+
+        User::observe(ModelObserver::class);
+        Account::observe(ModelObserver::class);
+        Transaction::observe(ModelObserver::class);
+        Report::observe(ModelObserver::class);
 
         Gate::define('owner-transaction', function (User $user, Transaction $transaction) {
             if ($user->id === $transaction->account->user_id) {
