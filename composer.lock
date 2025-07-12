@@ -2951,16 +2951,16 @@
         },
         {
             "name": "mateusjunges/laravel-kafka",
-            "version": "v2.7.1",
+            "version": "v2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mateusjunges/laravel-kafka.git",
-                "reference": "a6e3d42e8a795a8dba26cb7630d83a116b707094"
+                "reference": "522920dde2dbe384d3b9a0a493b03508480dd0b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mateusjunges/laravel-kafka/zipball/a6e3d42e8a795a8dba26cb7630d83a116b707094",
-                "reference": "a6e3d42e8a795a8dba26cb7630d83a116b707094",
+                "url": "https://api.github.com/repos/mateusjunges/laravel-kafka/zipball/522920dde2dbe384d3b9a0a493b03508480dd0b6",
+                "reference": "522920dde2dbe384d3b9a0a493b03508480dd0b6",
                 "shasum": ""
             },
             "require": {
@@ -3009,7 +3009,7 @@
             "description": "A kafka driver for laravel",
             "support": {
                 "issues": "https://github.com/mateusjunges/laravel-kafka/issues",
-                "source": "https://github.com/mateusjunges/laravel-kafka/tree/v2.7.1"
+                "source": "https://github.com/mateusjunges/laravel-kafka/tree/v2.7.2"
             },
             "funding": [
                 {
@@ -3017,7 +3017,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-06-14T03:16:02+00:00"
+            "time": "2025-07-11T00:35:47+00:00"
         },
         {
             "name": "monolog/monolog",
