@@ -14,6 +14,7 @@
         "inertiajs/inertia-laravel": "^2.0",
         "jeroen-g/explorer": "^4.1",
         "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.15",
         "laravel/tinker": "^2.10.1",
         "mateusjunges/laravel-kafka": "^2.7",
