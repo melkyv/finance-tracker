@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Report;
 use App\Models\Transaction;
 use App\Models\User;
@@ -26,12 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Transaction::observe(TransactionObserver::class);
-
+        Transaction::observe([TransactionObserver::class, ModelObserver::class]);
         User::observe(ModelObserver::class);
         Account::observe(ModelObserver::class);
-        Transaction::observe(ModelObserver::class);
         Report::observe(ModelObserver::class);
+        Category::observe(ModelObserver::class);
 
         Gate::define('owner-transaction', function (User $user, Transaction $transaction) {
             if ($user->id === $transaction->account->user_id) {
@@ -49,6 +49,13 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('owner-report', function (User $user, Report $report) {
             if ($user->id === $report->user_id) {
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('owner-category', function (User $user, Category $category) {
+            if ($user->id === $category->user_id) {
                 return true;
             }
             return false;
