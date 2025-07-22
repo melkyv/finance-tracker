@@ -30,19 +30,4 @@ class ProfileController extends Controller
         return UserResource::make($user);
     }
 
-    public function updatePassword(Request $request)
-    {
-        $user = $request->user();
-
-        $data = $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', 'confirmed', Password::defaults()],
-        ]);
-
-        $user->update([
-            'password' => Hash::make($data['password']),
-        ]);
-
-        return response()->noContent();
-    }
 }

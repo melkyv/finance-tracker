@@ -38,12 +38,12 @@ const mainNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
     {
         title: 'Repository',
-        href: '#',
+        href: 'https://github.com/melkyv/finance-tracker',
         icon: Folder,
     },
     {
         title: 'API Documentation',
-        href: '#',
+        href: '/docs',
         icon: BookOpen,
     },
 ];

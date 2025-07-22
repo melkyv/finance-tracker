@@ -17,7 +17,15 @@ class TransactionController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * List Transactions
+     *
+     * Returns a paginated list of the user's transactions.
+     * You can filter the results using the 'search' parameter.
+     *
+     * @queryParam page integer The page number to return. Example: 1
+     * @queryParam per_page integer The number of items to return per page. Defaults to 15. Example: 20
+     * @queryParam search string A search term to filter by transaction description, account name, or category name. Example: "Salary"
+     * @authenticated
      */
     public function index(Request $request)
     {
