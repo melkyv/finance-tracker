@@ -107,9 +107,10 @@ Follow the steps below to set up and run the project locally.
 
 9.  **Create the indexes and import the Models into Elasticsearch:**
     ```sh
+    php artisan scout:index transactions_index
+    php artisan scout:index reports_index
     php artisan scout:import "App\Models\Transaction"
     php artisan scout:import "App\Models\Report"
-    php artisan scout:index audit_logs
     ```
 
 10. **Create the audit topic in Kafka:**
