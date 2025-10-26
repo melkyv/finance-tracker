@@ -116,7 +116,7 @@ export default function CategoryIndex({ categories, filters }: CategoryIndexProp
                             <TableRow key={category.id}>
                                 <TableCell>{category.name} </TableCell>
                                 <TableCell>
-                                  {category.description.length > 100
+                                  {category.description?.length > 100
                                     ? `${category.description.slice(0, 70)}...`
                                     : category.description
                                   }
