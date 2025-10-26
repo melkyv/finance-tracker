@@ -54,7 +54,7 @@ class TransactionController extends Controller
         try {
             $this->service->create($request->validated());
   
-            return to_route('transactions.index')->with('success', 'Transaction created successfully!');
+            return to_route('transactions.index', ['page' => 1])->with('success', 'Transaction created successfully!');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
