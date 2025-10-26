@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\V1\ReportController;
 use App\Http\Controllers\Api\V1\TransactionController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->as('api.')->group(function () {
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/token', [AuthController::class, 'token']);
 
